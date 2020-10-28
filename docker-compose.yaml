@@ -1,0 +1,11 @@
+version: '3.0'
+services:
+  db:
+    image:
+      postgres
+    environment:
+      POSTGRES_USER: keker
+      POSTGRES_PASSWORD: everybodykissmybody
+      POSTGRES_DB: BetDB
+    ports:
+      - 5432:5432
