@@ -13,7 +13,7 @@ type DBContext struct {
 }
 
 func Connect() *sql.DB {
-	db, err := sql.Open("postgres", "postgres://keker:everybodykissmybody@localhost/BetDB?sslmode=disable")
+	db, err := sql.Open("postgres", "postgres://keker:everybodykissmybody@localhost/betdb?sslmode=disable")
 	if err != nil {
 		panic(err)
 	}

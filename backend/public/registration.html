@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+{{template "error" .Error}}
+<body>
+<div class="container">
+    <h1>Register</h1>
+    <hr>
+    <form action="/register" method="post">
+        <label for="login"><b>Login</b></label>
+        <input type="text" placeholder="Enter your username" name="username" required>
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" required>
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="password-repeat" required>
+        <label for="psw-repeat"><b>Repeat Password again motherfucker</b></label>
+        <input type="password" placeholder="Repeat Password" name="password-repeat" required>
+        <button type="submit" class="registerbtn">Register</button>
+    </form>
+    <hr>
+    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+</div>
+<div class="container signin">
+    <p>Already have an account? <a href="/">Sign in</a></p>
+</div>
+</body>
+
+</html>
