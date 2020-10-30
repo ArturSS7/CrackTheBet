@@ -8,6 +8,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+RUN python apiParser/init_db.py
 EXPOSE 5555
 
 CMD ["python", "./main.py"]
