@@ -11,13 +11,10 @@ class Match:
 
 class League:
 	def __init__(self, data):
-		#print(data)
 		self.matches = []
 		self.name = data.split("¬")[0]
 		for m in data.split("AA÷")[1:]:
-			#print(m)
 			ID = m.split('¬')[0]
-			#print(ID)
 			time = datetime.fromtimestamp(int(m.split('¬')[1][3:-1]))
 			t1 = m.split('CX÷')[1].split("¬")[0]
 			t2 = m.split('AF÷')[1].split("¬")[0]
