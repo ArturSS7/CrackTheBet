@@ -1,0 +1,16 @@
+{{define "login"}}
+    {{if .}}
+        <div class="registration">
+            <h1>Login</h1>
+            <hr>
+            <form action="/login" method="post">
+                <label for="login"><b>Login</b></label>
+                <input type="text" placeholder="Enter Login" name="username" required>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+                <button type="submit" class="login_btn">Login</button>
+            </form>
+            <hr>
+        </div>
+    {{end}}
+{{end}}

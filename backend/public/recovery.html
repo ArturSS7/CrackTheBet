@@ -1,0 +1,8 @@
+<form action="/recovery" method="post">
+    <label for="password"><b>New password</b></label>
+    <input type="password" placeholder="enter new password" name="password" required>
+    <label for="repeat-password"><b>Repeat new password</b></label>
+    <input type="password" placeholder="repeat new Password" name="repeat-password" required>
+    <input type="hidden" name="token" value="{{.}}">
+    <button type="submit" class="login_btn">Change password</button>
+</form>
