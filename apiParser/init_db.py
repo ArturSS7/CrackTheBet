@@ -1,5 +1,5 @@
 import psycopg2
-conn = psycopg2.connect(dbname='BetDB', user='keker', password='everybodykissmybody', host='localhost')
+conn = psycopg2.connect(dbname='betdb', user='keker', password='everybodykissmybody', host='localhost')
 cursor = conn.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS events (
