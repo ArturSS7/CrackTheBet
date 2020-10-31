@@ -1,4 +1,4 @@
-version: '3.0'
+version: '3.1'
 services:
   db:
     image:
@@ -9,10 +9,14 @@ services:
       POSTGRES_DB: betdb
     ports:
       - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   api_parse:
-    image:
+    build:
       ./apiParser
     ports:
       - 5555:5555
     links:
+      - db
+    depends_on:
       - db
