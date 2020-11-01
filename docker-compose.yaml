@@ -5,7 +5,7 @@ services:
       postgres
     environment:
       POSTGRES_USER: keker
-      POSTGRES_PASSWORD: everybodykissmybody
+      POSTGRES_PASSWORD: kek
       POSTGRES_DB: betdb
     ports:
       - 5432:5432
