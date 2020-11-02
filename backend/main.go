@@ -7,6 +7,7 @@ import (
 	"CrackTheBet/backend/authorization/registration"
 	"CrackTheBet/backend/authorization/sessionChecker"
 	"CrackTheBet/backend/database"
+	"CrackTheBet/backend/events"
 	"CrackTheBet/backend/user"
 	"fmt"
 	"github.com/gorilla/sessions"
@@ -54,6 +55,8 @@ func main() {
 	e.POST("/forgot-password", passwordRecovery.RecoverPassword)
 	e.GET("/recovery", passwordRecovery.CheckPasswordToken)
 	e.POST("/recovery", passwordRecovery.UpdatePassword)
+
+	e.GET("/api/events", events.GetEvents)
 	e.Debug = true
 	e.Logger.Fatal(e.Start(":5555"))
 }
