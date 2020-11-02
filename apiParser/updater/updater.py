@@ -1,9 +1,7 @@
 import requests
 import psycopg2
-try:
-	from models.models import Match, League
-except e as Exception:
-	print(e)
+from models.models import Match, League
+print("kek")
 from bs4 import BeautifulSoup
 
 
