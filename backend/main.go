@@ -6,6 +6,7 @@ import (
 	"CrackTheBet/backend/authorization/passwordRecovery"
 	"CrackTheBet/backend/authorization/registration"
 	"CrackTheBet/backend/authorization/sessionChecker"
+	"CrackTheBet/backend/bets"
 	"CrackTheBet/backend/database"
 	"CrackTheBet/backend/events"
 	"CrackTheBet/backend/user"
@@ -57,6 +58,8 @@ func main() {
 	e.POST("/recovery", passwordRecovery.UpdatePassword)
 
 	e.GET("/api/events", events.GetEvents)
+	e.POST("/api/bet", bets.MakeBet, sessionChecker.CheckSession)
+	e.GET("/api/bets", bets.GetBets, sessionChecker.CheckSession)
 	e.Debug = true
 	e.Logger.Fatal(e.Start(":5555"))
 }
