@@ -15,7 +15,8 @@ class League:
 		self.name = data.split("¬")[0]
 		for m in data.split("AA÷")[1:]:
 			ID = m.split('¬')[0]
-			time = datetime.fromtimestamp(int(m.split('¬')[1][3:-1]))
+			#time = datetime.fromtimestamp(int(m.split('¬')[1][3:-1]))
+			time = int(m.split('¬')[1][3:-1])
 			t1 = m.split('CX÷')[1].split("¬")[0]
 			t2 = m.split('AF÷')[1].split("¬")[0]
 			self.matches.append(Match(ID,time,t1,t2))
