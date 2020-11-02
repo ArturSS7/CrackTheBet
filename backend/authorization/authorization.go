@@ -20,7 +20,8 @@ func idSession(c echo.Context, id int64) *sessions.Session {
 	sess, _ := session.Get("session", c)
 	sess.Values["id"] = id
 	sess.Options = &sessions.Options{
-		Path: "/",
+		Path:     "/",
+		HttpOnly: true,
 	}
 	return sess
 }
