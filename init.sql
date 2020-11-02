@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS events (
     CREATE TABLE IF NOT EXISTS bets (
             id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
                 user_id integer,
-                    flashscore_id integer,
+                    flashscore_id varchar(255),
                         bet varchar(255),
                             odds float,
                                 amount integer,

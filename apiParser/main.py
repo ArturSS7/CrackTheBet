@@ -1,26 +1,27 @@
 import requests
 import psycopg2
-from bs4 import BeautifulSoup
-from models.models import Match, League
+from datetime import datetime
+from updater.updater import get_status, get_odds, update_db
 
-#connect to db
+print("ready")
 conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='kek'")
 cur = conn.cursor()
 
-#erase events db and restart ID
-cur.execute("TRUNCATE events RESTART IDENTITY")
-conn.commit()
+print("connected")
 
-#gets events from FS and insert into db
-headers={'X-Fsign': 'SW9D1eZo'}
-r = requests.get("https://d.flashscore.com/x/feed/f_1_0_3_en_1", headers=headers)
-lis = r.text.split("ZA÷")[1:]
-for item in lis:
-	league = League(item)
-	for match in league.matches:
-		cur.execute("insert into events (event_type, league, player1, player2, odds1, odds2, status, time, flashscore_id) values \
-					(%s, %s, %s, %s, %s, %s, %s, %s, %s)", ('soccer', league.name, match.t1, match.t2, 1.5, 1.5, 'finished', match.time, match.ID))
-		conn.commit()
+matches = update_db(cur, conn)
+
+print(matches)
+
+while(True):
+	for ID in matches:
+		status = get_status(ID)
+		try:
+			odds1, odds2 = get_odds(ID)
+		except AttributeError:
+			cur.execute("delete from events where flashscore_id = '{}'".format(ID))
+			conn.commit()
+		print(status, odds1, odds2)
 
 cur.close()
 conn.close()
