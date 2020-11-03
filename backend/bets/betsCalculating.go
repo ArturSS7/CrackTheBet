@@ -2,7 +2,6 @@ package bets
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 )
 
@@ -20,7 +19,6 @@ type Bet struct {
 }
 
 func addPrize(db *sql.DB, prize float32, userId int64) bool {
-	fmt.Println(prize)
 	_, err := db.Exec("update users set balance=balance+$1 where id = $2", prize, userId)
 	if err != nil {
 		log.Println(err)
