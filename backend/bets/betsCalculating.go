@@ -2,6 +2,7 @@ package bets
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 )
 
@@ -19,6 +20,7 @@ type Bet struct {
 }
 
 func addPrize(db *sql.DB, prize float32, userId int64) bool {
+	fmt.Println(prize)
 	_, err := db.Exec("update users set balance=balance+$1 where id = $2", prize, userId)
 	if err != nil {
 		log.Println(err)
@@ -102,7 +104,7 @@ func calculateBets(db *sql.DB, userId int64) bool {
 	calculateBetPrize(bets)
 	for _, v := range *bets {
 		if v.status == "finished" {
-			if !setPrize(db, v.id, v.prize) || !updateBalance(db, v.userId, v.amount) || !updateStatus(db, v.id, v.betStatus) || !addPrize(db, v.prize, v.userId) {
+			if !setPrize(db, v.id, v.prize) || !updateStatus(db, v.id, v.betStatus) || !addPrize(db, v.prize, v.userId) {
 				return false
 			}
 		}
