@@ -1,13 +1,9 @@
 package bets
 
 import (
-	"CrackTheBet/backend/authorization/sessionChecker"
-	"CrackTheBet/backend/database"
 	"CrackTheBet/backend/events"
 	"database/sql"
-	"github.com/labstack/echo"
 	"log"
-	"strconv"
 	"time"
 )
 
@@ -139,40 +135,4 @@ func processBet(db *sql.DB, userId int64, player int, amount int, balance int, i
 		return false
 	}
 	return false
-}
-
-func MakeBet(c echo.Context) error {
-	userId := sessionChecker.GetIdFromSession(c)
-	id := c.FormValue("id")
-	player, err := strconv.Atoi(c.FormValue("player"))
-	if err != nil {
-		log.Println(err)
-		return c.NoContent(500)
-	}
-	if player != 1 && player != 2 {
-		return c.String(200, "Incorrect player")
-	}
-	amount, err := strconv.Atoi(c.FormValue("amount"))
-	if err != nil {
-		log.Println(err)
-		return c.NoContent(500)
-	}
-	if amount <= 1 {
-		return c.String(200, "Incorrect amount")
-	}
-	cc := c.(*database.DBContext)
-	if checkEvent(cc.Db, id) {
-		if checkEventStatus(cc.Db, id) {
-			if res, balance := checkBalance(cc.Db, userId, amount); res {
-				res := processBet(cc.Db, userId, player, amount, balance, id)
-				if res {
-					return c.String(200, "Bet processed")
-				}
-				return c.String(200, "Error processing bet")
-			}
-			return c.String(200, "Not enough cash")
-		}
-		return c.String(200, "Event has already finished")
-	}
-	return c.String(200, "Event doesn't exist")
 }
