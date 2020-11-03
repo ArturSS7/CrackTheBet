@@ -1,7 +1,6 @@
 import requests
 import psycopg2
 from models.models import Match, League
-print("kek")
 from bs4 import BeautifulSoup
 
 
@@ -10,9 +9,18 @@ def get_status(ID):
 	soup = BeautifulSoup(r.text, features="lxml")
 	raw_status = soup.find("div", {"class": "info-status mstat"}).text
 	if "Finished" in raw_status:
-		return "finished"
+		t1 = int(soup.find("div", {"id": "event_detail_current_result"}).findAll("span", {"class":"scoreboard"})[0].text)
+		t2 = int(soup.find("div", {"id": "event_detail_current_result"}).findAll("span", {"class":"scoreboard"})[1].text)
+		if t1 > t2:
+			return "finished", 1
+		elif t1 < t2:
+			return "finished", 2
+		else:
+			return "finished", 0
+	elif '0a09090909090909c2a00a090909090909' == raw_status.encode().hex():
+		return "hasn't started", -1
 	else:
-		return "active"
+		return "active", -1
 
 def get_odds(ID):
 	headers={'X-Fsign': 'SW9D1eZo'}
