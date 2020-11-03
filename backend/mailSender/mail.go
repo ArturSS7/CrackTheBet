@@ -44,7 +44,7 @@ func SendPasswordRecoveryEmail(email string) string {
 	to := []string{email}
 	fmt.Println(to)
 	smtpServer := smtpServer{host: "smtp.gmail.com", port: "587"}
-	message := []byte("You password recovery link is down below. Thank you for staying with us. Link: http://127.0.0.1:5555/recovery?token=" + ui)
+	message := []byte("You password recovery link is down below. Thank you for staying with us. \nLink: http://127.0.0.1:5555/recovery?token=" + ui)
 	auth := smtp.PlainAuth("", from, password, smtpServer.host)
 	err := smtp.SendMail(smtpServer.Address(), auth, from, to, message)
 	if err != nil {
