@@ -45,6 +45,8 @@ class Worker(multiprocessing.Process):
 		self._job_queue = job_queue
 
 	def run(self):
+		conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='kek'")
+		cur = conn.cursor()
 		while True:
 			ID = self._job_queue.get()
 			if ID is None:
@@ -52,11 +54,12 @@ class Worker(multiprocessing.Process):
 			status, winner = get_status(ID)
 			try:
 				odds1, odds2 = get_odds(ID)
-				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s)", (odds1, odds2, status, winner, ID))
+				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s);", (odds1, odds2, status, winner, ID))
 				#conn.commit()
 			except AttributeError:
-				cur.execute("delete from events where flashscore_id = '{}'".format(ID))
+				cur.execute("delete from events where flashscore_id = '{}';".format(ID))
 				#conn.commit()
+
 			conn.commit()
 
 matches = update_db(cur, conn)
