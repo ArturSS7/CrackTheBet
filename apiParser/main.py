@@ -1,3 +1,4 @@
+import threading
 import requests
 import psycopg2
 import time
@@ -5,6 +6,9 @@ import multiprocessing
 from datetime import datetime
 from updater.updater import get_status, get_odds, update_db
 import logging
+import socket
+
+
 logging.basicConfig(filename='loggg.log', level=logging.INFO)
 logging.info("connected")
 
@@ -12,6 +16,27 @@ conn = None
 cur = None
 conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='kek'")
 cur = conn.cursor()
+
+
+def status_answer():
+	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	server_address = ('0.0.0.0', 5555)
+	sock.bind(server_address)
+	sock.listen(1)
+	while True:
+		connection, client_addres = sock.accept()
+		print("Accept")
+		try:
+			while True:
+				flashscore_id = connection.recv(1024).decode('utf-8').strip('\n')
+				print(flashscore_id)
+				status, num = get_status(flashscore_id)
+				print(status)
+				connection.sendall(str.encode(status+'\n'))
+				break
+		finally:
+			connection.close()
+
 
 class Worker(multiprocessing.Process):
 
@@ -33,7 +58,7 @@ class Worker(multiprocessing.Process):
 				cur.execute("delete from events where flashscore_id = '{}'".format(ID))
 				#conn.commit()
 			conn.commit()
-			
+
 matches = update_db(cur, conn)
 
 jobs = []
@@ -43,6 +68,11 @@ for i in range(5):
 	p = Worker(job_queue)
 	jobs.append(p)
 	p.start()
+
+#Start socket
+sock = threading.Thread(target=status_answer, args=())
+sock.start()
+###
 
 while(True):
 	start_time = time.time()
@@ -60,7 +90,7 @@ while(True):
 		job_queue.put(ID)
 		print()
 	while(not job_queue.empty()):
-		print("not empty")
+		#print("not empty")
 		pass
 	conn.commit()
 	logging.info("Update took : {}".format(time.time() - start_time))
