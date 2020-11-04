@@ -54,10 +54,10 @@ class Worker(multiprocessing.Process):
 			status, winner = get_status(ID)
 			try:
 				odds1, odds2 = get_odds(ID)
-				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s);", (odds1, odds2, status, winner, ID))
+				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s)", (odds1, odds2, status, winner, ID))
 				#conn.commit()
 			except AttributeError:
-				cur.execute("delete from events where flashscore_id = '{}';".format(ID))
+				cur.execute("delete from events where flashscore_id = '{}'".format(ID))
 				#conn.commit()
 
 			conn.commit()
