@@ -18,7 +18,7 @@ conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='kek'")
 cur = conn.cursor()
 
 
-def status_answer():
+def status_resp():
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	server_address = ('0.0.0.0', 5555)
 	sock.bind(server_address)
@@ -73,7 +73,7 @@ for i in range(5):
 	p.start()
 
 #Start socket
-sock = threading.Thread(target=status_answer, args=())
+sock = threading.Thread(target=status_resp, args=())
 sock.start()
 ###
 
