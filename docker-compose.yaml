@@ -12,6 +12,7 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - "dbdata:/var/lib/postgresql/data"
+    command: ["postgres", "-c", "log_statement=all"]
   api_parse:
     build:
       ./apiParser
@@ -21,5 +22,7 @@ services:
       - db
     depends_on:
       - db
+    volumes:
+      - ./apiParser/loggg.log:/app/loggg.log
 volumes:
   dbdata:
