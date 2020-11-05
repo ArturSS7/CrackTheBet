@@ -5,14 +5,15 @@ services:
       postgres
     environment:
       POSTGRES_USER: keker
-      POSTGRES_PASSWORD: kek
+      POSTGRES_PASSWORD: everybodykissmybody
       POSTGRES_DB: betdb
     ports:
       - 5432:5432
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - "dbdata:/var/lib/postgresql/data"
-  api_parse:
+    command: ["postgres", "-c", "log_statement=all"]
+  apiparse:
     build:
       ./apiParser
     ports:
@@ -21,5 +22,19 @@ services:
       - db
     depends_on:
       - db
+    volumes:
+      - ./apiParser/loggg.log:/app/loggg.log
+  backend:
+    build:
+      ./backend
+    ports:
+      - 666:666
+    links:
+      - db
+      - apiparse
+    depends_on:
+      - db
+      - apiparse
+
 volumes:
   dbdata:

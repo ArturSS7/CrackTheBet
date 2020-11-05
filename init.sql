@@ -36,3 +36,13 @@ CREATE TABLE IF NOT EXISTS users(
                         verified boolean default false,
                             balance float default 228
         );
+
+CREATE TABLE IF NOT EXISTS verification(
+        id int unique,
+            token varchar(36) unique
+        );
+
+CREATE TABLE IF NOT EXISTS password_recovery(
+        id int unique,
+            token varchar(36) unique
+        );

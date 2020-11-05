@@ -14,7 +14,7 @@ logging.info("connected")
 
 conn = None
 cur = None
-conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='kek'")
+conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='everybodykissmybody'")
 cur = conn.cursor()
 
 

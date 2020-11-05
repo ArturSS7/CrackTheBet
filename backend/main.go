@@ -28,7 +28,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 
 func main() {
 	t := &Template{
-		templates: template.Must(template.ParseGlob("backend/public/*.html")),
+		templates: template.Must(template.ParseGlob("public/*.html")),
 	}
 	secret := []byte("ggunjXx8$SKYe3twGqz%")
 	fmt.Println(authorization.HashPassword("kek"))
@@ -61,5 +61,5 @@ func main() {
 	e.POST("/api/bet", bets.MakeBet, sessionChecker.CheckSession)
 	e.GET("/api/bets", bets.GetBets, sessionChecker.CheckSession)
 	e.Debug = true
-	e.Logger.Fatal(e.Start(":5555"))
+	e.Logger.Fatal(e.Start(":666"))
 }
