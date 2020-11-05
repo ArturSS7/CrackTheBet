@@ -2,10 +2,34 @@ package bets
 
 import (
 	"CrackTheBet/backend/events"
+	"bufio"
 	"database/sql"
+	"fmt"
 	"log"
+	"net"
 	"time"
 )
+
+func updateEventStatus(db *sql.DB, id string) bool {
+	conn, _ := net.Dial("tcp", "127.0.0.1:5555")
+	_, err := fmt.Fprintf(conn, id+"\n")
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	status, err := bufio.NewReader(conn).ReadString('\n')
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	fmt.Println(status)
+	_, err = db.Exec("update events set status = $1 where id = $2", status, id)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	return true
+}
 
 func checkBalance(db *sql.DB, userId int64, amount int) (bool, int) {
 	var balance int
