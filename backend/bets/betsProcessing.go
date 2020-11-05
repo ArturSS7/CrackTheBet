@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strings"
 	"time"
 )
 
@@ -22,8 +23,7 @@ func updateEventStatus(db *sql.DB, id string) bool {
 		log.Println(err)
 		return false
 	}
-	fmt.Println(status)
-	_, err = db.Exec("update events set status = $1 where id = $2", status, id)
+	_, err = db.Exec("update events set status = $1 where flashscore_id = $2", strings.ReplaceAll(status, "\n", ""), id)
 	if err != nil {
 		log.Println(err)
 		return false

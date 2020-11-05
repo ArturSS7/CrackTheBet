@@ -46,19 +46,22 @@ func MakeBet(c echo.Context) error {
 	}
 	cc := c.(*database.DBContext)
 	if checkEvent(cc.Db, id) {
-		if checkEventStatus(cc.Db, id) {
-			if res, balance := checkBalance(cc.Db, userId, amount); res {
-				res := processBet(cc.Db, userId, player, amount, balance, id)
-				if res {
-					return c.String(200, "Bet processed")
+		if updateEventStatus(cc.Db, id) {
+			if checkEventStatus(cc.Db, id) {
+				if res, balance := checkBalance(cc.Db, userId, amount); res {
+					res := processBet(cc.Db, userId, player, amount, balance, id)
+					if res {
+						return c.String(200, "Bet processed")
+					}
+					return c.String(200, "Error processing bet")
 				}
-				return c.String(200, "Error processing bet")
+				return c.String(200, "Not enough cash")
 			}
-			return c.String(200, "Not enough cash")
+			return c.String(200, "Event has already finished")
 		}
-		return c.String(200, "Event has already finished")
+		return c.String(200, "Event doesn't exist")
 	}
-	return c.String(200, "Event doesn't exist")
+	return c.String(200, "Error")
 }
 
 func GetBets(c echo.Context) error {
