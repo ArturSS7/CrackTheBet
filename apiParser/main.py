@@ -45,7 +45,7 @@ class Worker(multiprocessing.Process):
 		self._job_queue = job_queue
 
 	def run(self):
-		conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='kek'")
+		conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='everybodykissmybody'")
 		cur = conn.cursor()
 		while True:
 			ID = self._job_queue.get()
