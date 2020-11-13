@@ -34,6 +34,9 @@ func main() {
 	fmt.Println(authorization.HashPassword("kek"))
 	db := database.Connect()
 	e := echo.New()
+	e.Static("/static", "static")
+	//e.Use(middleware.Static("static"))
+	//e.Use(livereload.LiveReload())
 	//e.Use(sessionChecker.CheckSession) for some reason doesn't work
 	e.Use(func(h echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
@@ -43,7 +46,6 @@ func main() {
 	})
 	e.Renderer = t
 	e.Use(session.Middleware(sessions.NewCookieStore(secret)))
-	e.Static("/static", "static")
 	e.GET("/", user.GetIndex)
 	e.GET("/profile", user.GetProfile, sessionChecker.CheckSession)
 	//e.GET("/login", authorization.LoginPage)

@@ -1,0 +1,78 @@
+body{
+	margin: 0;
+}
+/* header */
+.header{
+	background: red;
+	height: 80px;
+}
+.header button {
+  float: right;
+  margin-top: 30px;
+}
+/* main */
+.main{
+	background: pink;
+}
+.content{
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+.sport_menu{
+	background: yellow;
+}
+.events{
+	background: lightpink;
+}
+.league{
+  border: 1px solid black;
+}
+.title{
+  border-bottom: 1px solid grey;
+  height: 24px;
+  padding-top: 1%;
+}
+.title p{
+  margin: 0 0 0 5%;
+}
+.match{
+  height: 30px;
+  border-bottom: 1px dotted grey; 
+}
+.match div{
+  display: inline-block;
+}
+.match:last-child{
+  border-bottom: none;
+}
+.match .time{
+  margin-left: 2%;
+}
+.match .team1{
+  margin-left: 7%;
+}
+.match .team2{
+  float: right;
+  margin-right: 7%;
+}
+.match .odd1{
+  margin-left: 15%;
+}
+.match .odd2{
+  float: right;
+  margin-right: 15%;
+}
+.match .dvoetochie{
+  position: absolute;
+  right: 50%;
+}
+.match .odds:hover{
+  color:white;
+  cursor: pointer;
+}
+/* footer */
+.footer{
+	background: blue;
+	height: 60px;
+}

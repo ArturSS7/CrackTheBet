@@ -2,15 +2,65 @@
 <html>
 
 <head>
+	
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="private">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="/root/go/src/CrackTheBet/backend/static/main.js"></script>
+    	<link rel="stylesheet" href="/root/go/src/CrackTheBet/backend/static/styles.css"> -->
+    <script src="/static/main.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 
 <body>
-{{template "login" .Login}}
+<!--{{template "login" .Login}}
 <div class="container signin">
     <p>Want to register? <a href="/register">Fuck you.</a></p>
     <p>Forgot password? <a href="/forgot-password">Fuck you.</a></p>
 </div>
+-->
+	<div class="container header">
+		<button>login</button>
+		<button>register</button>
+	</div>
+	<div class="container main">
+		<div class="container content">
+			<div class="container sport_menu">
+				<button>Football</button>
+			</div>
+			<div class="container events">
+					<div class="container league">
+						<div class="title"><p>Nigeria</p></div>
+						<div class="match">
+							<div class="time">2:28</div>
+							<div class="odd1 odds">14.88</div>
+							<div class="team1">Kek</div>
+							<div class="dvoetochie">:</div>
+							<div class="odd2 odds">3.22</div>
+							<div class="team2">Daun</div>
+						</div>
+						<div class="match">
+							<div class="time">2:28</div>
+							<div class="odd1 odds">14.88</div>
+							<div class="team1">Kek</div>
+							<div class="dvoetochie">:</div>
+							<div class="odd2 odds">3.22</div>
+							<div class="team2">Daun</div>
+						</div>
+						<div class="match">
+							<div class="time">2:28</div>
+							<div class="odd1 odds">14.88</div>
+							<div class="team1">Kek</div>
+							<div class="dvoetochie">:</div>
+							<div class="odd2 odds">3.22</div>
+							<div class="team2">Daun</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="container footer">
+	</div>
 </body>
 
 </html>
