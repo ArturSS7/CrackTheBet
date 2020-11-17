@@ -16,6 +16,10 @@ func HashPassword(password string) (string, error) {
 	return string(bytes), err
 }
 
+type Error struct {
+	Err string `json:"error"`
+}
+
 func idSession(c echo.Context, id int64) *sessions.Session {
 	sess, _ := session.Get("session", c)
 	sess.Values["id"] = id
@@ -35,7 +39,7 @@ func HandleAuth(c echo.Context) error {
 	rows, err := cc.Db.Query("select  id, password from users where username = $1", username)
 	if err != nil {
 		log.Println(err)
-		return c.String(401, "Invalid credentials")
+		return c.JSON(401, Error{Err: "Invalid credentials"})
 	}
 	var id int64
 	var password string
@@ -46,17 +50,17 @@ func HandleAuth(c echo.Context) error {
 		}
 	}
 	if id == 0 {
-		return c.String(401, "Invalid credentials")
+		return c.JSON(401, Error{Err: "Invalid credentials"})
 	}
 
 	if err = bcrypt.CompareHashAndPassword([]byte(password), []byte(c.FormValue("password"))); err != nil {
-		return c.String(401, "Invalid credentials")
+		return c.JSON(401, Error{Err: "Invalid credentials"})
 	}
 
 	rows, err = cc.Db.Query("select verified from users where username = $1", username)
 	if err != nil {
 		log.Println(err)
-		return c.String(400, "Error")
+		return c.JSON(401, Error{Err: "Error"})
 	}
 	var verified bool
 	for rows.Next() {
@@ -68,10 +72,10 @@ func HandleAuth(c echo.Context) error {
 	if verified {
 		sess := idSession(c, id)
 		if err := sess.Save(c.Request(), c.Response()); err != nil {
-			return c.String(http.StatusUnprocessableEntity, "Something somewhere went terribly wrong")
+			return c.JSON(http.StatusUnprocessableEntity, &Error{Err: "Something somewhere went terribly wrong"})
 		}
 		return c.Redirect(http.StatusFound, "/profile")
 	} else {
-		return c.String(200, "Please verify email")
+		return c.JSON(200, &Error{Err: "Invalid credentials"})
 	}
 }

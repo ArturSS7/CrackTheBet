@@ -50,7 +50,7 @@ func main() {
 	e.GET("/profile", user.GetProfile, sessionChecker.CheckSession)
 	//e.GET("/login", authorization.LoginPage)
 	e.POST("/login", authorization.HandleAuth)
-	e.GET("/register", user.GetRegistration)
+	//e.GET("/register", user.GetRegistration)
 	e.POST("/register", registration.HandleRegistration)
 	e.GET("/logout", user.LogOut)
 	e.GET("/confirm-email/", emailConfirmation.ConfirmEmail)

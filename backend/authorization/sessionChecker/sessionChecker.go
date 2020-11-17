@@ -15,7 +15,7 @@ func CheckSession(next echo.HandlerFunc) echo.HandlerFunc {
 			}
 		}
 		if id := GetIdFromSession(c); id == -1 {
-			return c.Redirect(301, "/")
+			return c.Redirect(302, "/")
 		}
 		return next(c)
 	}

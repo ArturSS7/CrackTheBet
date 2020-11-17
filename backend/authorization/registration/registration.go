@@ -70,59 +70,63 @@ func HandleRegistration(c echo.Context) error {
 	rows, err := cc.Db.Query("select exists (select id from users where username = $1) and (select verified from users where username = $2)", username, username)
 	if err != nil {
 		log.Println(err)
-		return c.String(400, "Error")
+		return c.JSON(401, &authorization.Error{Err: "Error"})
 	}
 	for rows.Next() {
 		err := rows.Scan(&result)
 		if err != nil {
 			log.Println(err)
-			return c.String(400, "Error")
+			return c.JSON(401, &authorization.Error{Err: "Error"})
 		}
 	}
 	if result {
-		return c.Render(200, "registration.html", user.ErrorContext{Error: "Username already registered"})
+		return c.JSON(401, &authorization.Error{Err: "Username is already registered"})
 	}
 	rows, err = cc.Db.Query("select exists (select id from users where email = $1) and (select verified from users where email = $2)", email, email)
 	if err != nil {
 		log.Println(err)
-		return c.String(400, "Error")
+		return c.JSON(401, &authorization.Error{Err: "Error"})
 	}
 	for rows.Next() {
 		err := rows.Scan(&result)
 		if err != nil {
 			log.Println(err)
-			return c.String(400, "Error")
+			return c.JSON(401, &authorization.Error{Err: "Error"})
 		}
 	}
 	if result {
-		return c.Render(200, "registration.html", user.ErrorContext{Error: "Email already registered"})
+		return c.JSON(401, &authorization.Error{Err: "Email is already registered"})
 	}
 
 	password, err = authorization.HashPassword(password)
 	if err != nil {
 		log.Println(err)
-		return c.String(400, "Error")
+		return c.JSON(401, &authorization.Error{Err: "Error"})
 	}
 	var id int
 	rows, err = cc.Db.Query("select id from users where email = $1", email)
 	if err != nil {
 		log.Println(err)
+		return c.JSON(401, &authorization.Error{Err: "Error"})
 	}
 	for rows.Next() {
 		err := rows.Scan(&id)
 		if err != nil {
 			log.Println(err)
+			return c.JSON(401, &authorization.Error{Err: "Error"})
 		}
 	}
 	if id != 0 {
 		_, err = cc.Db.Exec("update users set username=$1, password = $2, email = $3 where id = $4", username, password, email, id)
 		if err != nil {
 			log.Println(err)
+			return c.JSON(401, &authorization.Error{Err: "Error"})
 		}
 	} else {
 		_, err = cc.Db.Exec("insert into users(username, password, email) values ($1, $2, $3)", username, password, email)
 		if err != nil {
 			log.Println(err)
+			return c.JSON(401, &authorization.Error{Err: "Error"})
 		}
 	}
 	token := mailSender.SendConfirmationEmail(email)
@@ -131,11 +135,13 @@ func HandleRegistration(c echo.Context) error {
 		rows, err = cc.Db.Query("select id from users where email = $1", email)
 		if err != nil {
 			log.Println(err)
+			return c.JSON(401, &authorization.Error{Err: "Error"})
 		}
 		for rows.Next() {
 			err := rows.Scan(&id)
 			if err != nil {
 				log.Println(err)
+				return c.JSON(401, &authorization.Error{Err: "Error"})
 			}
 		}
 		_, err := cc.Db.Exec("insert into verification values($1, $2) on conflict(id) do update set token = $2 where verification.id = $1", id, token)
@@ -143,6 +149,5 @@ func HandleRegistration(c echo.Context) error {
 			log.Println(err)
 		}
 	}
-	return c.String(200, "Thank you for your registration. Confirmation email has been sent to you.")
-
+	return c.JSON(401, &authorization.Error{Err: "Thank you for your registration. Confirmation email has been sent to you."})
 }
