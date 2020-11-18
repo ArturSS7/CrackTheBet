@@ -26,6 +26,13 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
+func CacheHeader(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		c.Response().Header().Set("Cache-Control", "no-cache")
+		return next(c)
+	}
+}
+
 func main() {
 	t := &Template{
 		templates: template.Must(template.ParseGlob("public/*.html")),
@@ -45,6 +52,7 @@ func main() {
 		}
 	})
 	e.Renderer = t
+	e.Use(CacheHeader)
 	e.Use(session.Middleware(sessions.NewCookieStore(secret)))
 	e.GET("/", user.GetIndex)
 	e.GET("/profile", user.GetProfile, sessionChecker.CheckSession)
