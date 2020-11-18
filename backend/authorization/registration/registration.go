@@ -4,7 +4,6 @@ import (
 	"CrackTheBet/backend/authorization"
 	"CrackTheBet/backend/database"
 	"CrackTheBet/backend/mailSender"
-	"CrackTheBet/backend/user"
 	"github.com/labstack/echo"
 	"log"
 	"regexp"
@@ -47,15 +46,15 @@ func HandleRegistration(c echo.Context) error {
 	password := c.FormValue("password")
 	repeatPassword := c.FormValue("password-repeat")
 	if password != repeatPassword {
-		return c.Render(200, "registration.html", user.ErrorContext{Error: "Passwords don't match"})
+		return c.JSON(401, &authorization.Error{Err: "Passwords don't match"})
 	}
 	if !ValidatePassword(password) {
-		return c.Render(200, "registration.html", user.ErrorContext{Error: "Password must be minimum 8 letters long, contain numbers, upper chars and special characters"})
+		return c.JSON(401, &authorization.Error{Err: "Password must be minimum 8 letters long, contain numbers, upper chars and special characters"})
 	}
 	var result bool
 	username := c.FormValue("username")
 	if len(username) < 3 {
-		return c.Render(200, "registration.html", user.ErrorContext{Error: "Username must be at least 3 letters long "})
+		return c.JSON(401, &authorization.Error{Err: "Username must be at least 3 letters long "})
 	}
 	email := c.FormValue("email")
 	//re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
@@ -64,7 +63,7 @@ func HandleRegistration(c echo.Context) error {
 	//if err != nil{
 	re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 	if !re.MatchString(email) {
-		return c.Render(200, "registration.html", user.ErrorContext{Error: "Invalid email"})
+		return c.JSON(401, &authorization.Error{Err: "Invalid email"})
 	}
 	cc := c.(*database.DBContext)
 	rows, err := cc.Db.Query("select exists (select id from users where username = $1) and (select verified from users where username = $2)", username, username)
@@ -149,5 +148,5 @@ func HandleRegistration(c echo.Context) error {
 			log.Println(err)
 		}
 	}
-	return c.JSON(401, &authorization.Error{Err: "Thank you for your registration. Confirmation email has been sent to you."})
+	return c.JSON(200, &authorization.Error{Err: "Thank you for your registration. Confirmation email has been sent to you."})
 }
