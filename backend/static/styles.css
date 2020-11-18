@@ -4,11 +4,24 @@ body{
 /* header */
 .header{
 	background: red;
-	height: 80px;
+  height: 80px;
+}
+.buttons{
+  margin: 30px 2% 0 0;
+  float: right;
+  display: inline-block;
 }
 .header button {
-  float: right;
-  margin-top: 30px;
+  
+}
+.logo{
+  display: inline-block;
+  margin: 30px 0 0 5%;
+}
+.header p{
+  margin: 0 0 0 0;
+  font-size: 23px;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
 }
 /* main */
 .main{
@@ -75,4 +88,60 @@ body{
 .footer{
 	background: blue;
 	height: 60px;
+}
+
+/*Всплывающее окно*/
+.block-popup{
+  position: absolute;
+  background: #fff;
+  width: 37%;
+  height: 135px;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 12px 20px -10px;
+  text-align: center;
+  display: none;
+}
+.block-popup input{
+  margin-top: 5px;
+  margin-right: 10%;
+  marker-left: 10%; 
+}
+.block-popup label{
+  width: 120px;
+  display: inline-block;
+  text-align: right;
+}
+.block-popup span{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+.overlay {
+  width: 100%;
+  height: 100%;
+  background: rgba(51, 51, 51, 0.78);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+}
+.block-popup_reg{
+  
+}
+.reg_error{
+  display: none;
+  background: pink;
+  color: red;
+}
+.log_error{
+  display: none;
+  background: pink;
+  color: red;
 }
