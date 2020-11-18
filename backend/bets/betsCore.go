@@ -25,6 +25,10 @@ type BetsRes struct {
 	Bets []BetRes `json:"bets"`
 }
 
+type Error struct {
+	Err string `json:"error"`
+}
+
 func MakeBet(c echo.Context) error {
 	userId := sessionChecker.GetIdFromSession(c)
 	id := c.FormValue("id")
@@ -34,7 +38,7 @@ func MakeBet(c echo.Context) error {
 		return c.NoContent(500)
 	}
 	if player != 1 && player != 2 {
-		return c.String(200, "Incorrect player")
+		return c.JSON(500, Error{Err: "Incorrect player"})
 	}
 	amount, err := strconv.Atoi(c.FormValue("amount"))
 	if err != nil {
@@ -42,7 +46,7 @@ func MakeBet(c echo.Context) error {
 		return c.NoContent(500)
 	}
 	if amount <= 1 {
-		return c.String(200, "Incorrect amount")
+		return c.JSON(500, Error{Err: "Incorrect amount"})
 	}
 	cc := c.(*database.DBContext)
 	if checkEvent(cc.Db, id) {
@@ -51,17 +55,17 @@ func MakeBet(c echo.Context) error {
 				if res, balance := checkBalance(cc.Db, userId, amount); res {
 					res := processBet(cc.Db, userId, player, amount, balance, id)
 					if res {
-						return c.String(200, "Bet processed")
+						return c.JSON(200, Error{Err: "Bet processed"})
 					}
-					return c.String(200, "Error processing bet")
+					return c.JSON(500, Error{Err: "Error processing bet"})
 				}
-				return c.String(200, "Not enough cash")
+				return c.JSON(500, Error{Err: "Not enough cash"})
 			}
-			return c.String(200, "Event has already finished")
+			return c.JSON(500, Error{Err: "Event has already finished"})
 		}
-		return c.String(200, "Event doesn't exist")
+		return c.JSON(500, Error{Err: "Event doesn't exist"})
 	}
-	return c.String(200, "Error")
+	return c.JSON(500, Error{Err: "Error"})
 }
 
 func GetBets(c echo.Context) error {
