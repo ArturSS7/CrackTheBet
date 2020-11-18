@@ -20,8 +20,11 @@
 </div>
 -->
 	<div class="container header">
-		<button>login</button>
-		<button>register</button>
+		<div class="logo"><p>CrackTheBet</p></div>
+		<div class="buttons">
+			<button class="login_button">login</button>
+			<button class="reg_button">register</button>
+		</div>
 	</div>
 	<div class="container main">
 		<div class="container content">
@@ -61,6 +64,46 @@
 	</div>
 	<div class="container footer">
 	</div>
+	<div class="overlay"></div>
+	<div class="block-popup block-popup_login">
+	  <h3>Log in</h3>
+	  <p class="log_error"></p>
+	  <form action='/login' method="post" class="login_form">
+	  	<label for="login_1">Login:</label>
+	    <input class="log_u" type="text" placeholder="enter login" id="login_1" name="username" required/><br>
+	    <label for="pass_2">Password:</label>
+	    <input class="log_p" type="password" id="pass_1" name="password" required/><br>
+	    <input type="submit" value="Confirm"/>
+	  </form>
+	  <span>&times;</span>
+	</div>
+	<div class="block-popup block-popup_reg">
+	  <h3>Registration</h3>
+	  <p class="reg_error"></p>
+	  <form action='/register' method="post" class="reg_form">
+	  	<label for="login_2">Login:</label>
+	    <input class="reg_u" type="text" id="login_2" placeholder="enter login" name="username" required/>
+	    <br>
+	    <label for="email">E-Mail:</label>
+	    <input class="reg_e" type="email" id="email" placeholder="enter email" name="email" required/>
+	    <br>
+	    <label for="pass_2">Password:</label>
+	    <input class="reg_p" type="password" id="pass_2" name="password" required/>
+	    <br>
+	    <label for="pass_r">Repeat password:</label>
+	    <input class="reg_pr" type="password" id="pass_r" name="password-repeat" required/>
+	   	<br>
+	    <input type="submit" value="Confirm"/>
+	  </form>
+	  <span>&times;</span>
+	</div>
+	<div class="block-popup reg_success">
+		<h3>Success</h3>
+		<p>Registration is succeed.
+		Please, confirm it via email.</p>
+		<span>&times;</span>
+	</div>
+	
 </body>
 
 </html>

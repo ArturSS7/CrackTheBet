@@ -1,7 +1,87 @@
 $(document).ready((function(){
 	//let i = setInterval(function(){update_events()}, 2000);
 	update_events();
+	$('.login_button').click(function(){
+		$('.block-popup_login, .overlay').fadeIn();
+	})
+	$('.block-popup_login span').click(function(){
+		$('.block-popup_login, .overlay').fadeOut();
+	})
+	$('.reg_button').click(function(){
+		$('.block-popup_reg, .overlay').fadeIn();
+	})
+	$('.block-popup_reg span').click(function(){
+		$('.block-popup_reg, .overlay').fadeOut();
+	})
+	$('.reg_success span').click(function(){
+		$('.reg_success, .overlay').fadeOut();
+	})
+
+	$('.reg_form').submit(function(event) {
+
+        // get the form data
+        // there are many ways to get this data using jQuery (you can use the class or id also)
+        var formData = {
+            'username'              : $('.reg_u').val(),
+            'email'             : $('.reg_e').val(),
+            'password'    : $('.reg_p').val(),
+            'password-repeat'    : $('.reg_pr').val()
+        };
+
+        // process the form
+        $.ajax({
+            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url         : 'register', // the url where we want to POST
+            data        : formData, // our data object
+            dataType    : 'json', // what type of data do we expect back from the server
+            encode      : true,
+            success: function(data) {
+                console.log("success", data);
+                $('.block-popup_reg').fadeOut();
+                $('.reg_success').fadeIn();
+            },
+            error: function(response, status, error){
+            	console.log(response.responseJSON.error);
+            	document.getElementsByClassName('reg_error')[0].innerText = response.responseJSON.error;
+            	document.getElementsByClassName('reg_error')[0].style.display = 'block';
+            }
+        });
+        event.preventDefault();
+    });
+
+    $('.login_form').submit(function(event) {
+
+        // get the form data
+        // there are many ways to get this data using jQuery (you can use the class or id also)
+        var formData = {
+            'username'              : $('.log_u').val(),
+            'password'    : $('.log_p').val()
+        };
+
+        // process the form
+        $.ajax({
+            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url         : 'login', // the url where we want to POST
+            data        : formData, // our data object
+            dataType    : 'json', // what type of data do we expect back from the server
+            encode      : true,
+            success: function(data) {
+                console.log("success", data);
+                location.reload();
+            },
+            error: function(response, status, error){
+            	console.log(response.responseJSON.error);
+            	document.getElementsByClassName('log_error')[0].innerText = response.responseJSON.error;
+            	document.getElementsByClassName('log_error')[0].style.display = 'block';
+            }
+        });
+        event.preventDefault();
+    });
+
+
 }));
+
+
 
 function update_events(){
 	$(".events").empty();
