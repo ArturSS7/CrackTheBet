@@ -72,10 +72,10 @@ func HandleAuth(c echo.Context) error {
 	if verified {
 		sess := idSession(c, id)
 		if err := sess.Save(c.Request(), c.Response()); err != nil {
-			return c.JSON(http.StatusUnprocessableEntity, &Error{Err: "Something somewhere went terribly wrong"})
+			return c.JSON(http.StatusUnprocessableEntity, Error{Err: "Something somewhere went terribly wrong"})
 		}
-		return c.Redirect(http.StatusFound, "/profile")
+		return c.JSON(200, Error{Err: "Success"})
 	} else {
-		return c.JSON(200, &Error{Err: "Invalid credentials"})
+		return c.JSON(401, Error{Err: "Invalid credentials"})
 	}
 }
