@@ -6,13 +6,15 @@ body{
 	background: red;
   height: 80px;
 }
-.buttons{
+.right_header{
   margin: 30px 2% 0 0;
   float: right;
   display: inline-block;
+  width: 30%;
 }
-.header button {
-  
+.buttons {
+  display: inline-block;
+  float: right;
 }
 .logo{
   display: inline-block;
@@ -21,6 +23,14 @@ body{
 .header p{
   margin: 0 0 0 0;
   font-size: 23px;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+}
+.balance{
+  display: inline-block;
+  margin-right: 5%;
+}
+.balance p{
+  font-size: 16px;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
 }
 /* main */
@@ -109,7 +119,7 @@ body{
 }
 .block-popup input{
   margin-top: 5px;
-  margin-right: 10%;
+  /*margin-right: 10%;*/
   marker-left: 10%; 
 }
 .block-popup label{
@@ -117,7 +127,7 @@ body{
   display: inline-block;
   text-align: right;
 }
-.block-popup span{
+.block-popup .fadeOut{
   position: absolute;
   top: 5px;
   right: 5px;
@@ -144,4 +154,12 @@ body{
   display: none;
   background: pink;
   color: red;
+}
+.bet_error{
+  display: none;
+  background: pink;
+  color: red;
+}
+.bet_descr_team{
+  font-weight: bold;
 }

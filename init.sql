@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS bets (
                                     bet_time bigint,
                                         event_type varchar(32),
                                             bet_player int,
-                                                flashscore_id varchar(32) unique,
+                                                flashscore_id varchar(32),
                                                     prize float default -1,
                                                         status varchar(32) default 'not_processed'
         );
