@@ -24,13 +24,12 @@ def get_status(ID):
 
 def get_odds(ID):
 	headers={'X-Fsign': 'SW9D1eZo'}
-	r = requests.get("https://d.flashscore.com/x/feed/d_od_{}_en_1_eu".format(ID), headers=headers)
-	soup = BeautifulSoup(r.text, features="lxml")
-	raw_odd = soup.find("tr", {"class": "odd"})
-	odds1 = raw_odd.find("td", {"onclick": "e_t.track_click('bookmaker-button-click', 'block-1x2_ft_1');"}).find(\
-		"span", {"class": "odds-wrap"}).text
-	odds2 = raw_odd.find("td", {"onclick": "e_t.track_click('bookmaker-button-click', 'block-1x2_ft_2');"}).find(\
-		"span", {"class": "odds-wrap"}).text
+	r = requests.get("https://d.flashscore.com/x/feed/df_dos_1_{}_".format(ID), headers=headers)
+	print(r.text, ID)
+	#odd1 = r.text.split('÷')[3].splt('¬')[0][1:]
+	print(r.text.split('÷').splt('¬'))
+	odd2 = r.text.split('÷')[7].splt('¬')[0][1:]
+	print(odd1, odd2)
 	return odds1, odds2
 
 def update_db(cur, conn):
@@ -45,7 +44,7 @@ def update_db(cur, conn):
 	r = requests.get("https://d.flashscore.com/x/feed/f_1_0_3_en_1", headers=headers)
 	print("got data from FS")
 	lis = r.text.split("ZA÷")[1:]
-	for item in lis:
+	for item in lis[:3]:
 		league = League(item)
 		for match in league.matches:
 			matches.append(match.ID)

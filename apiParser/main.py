@@ -8,17 +8,23 @@ from updater.updater import get_status, get_odds, update_db
 import logging
 import socket
 
+manager = multiprocessing.Manager()
+matches = manager.list()
+
+conn_str = "user='keker' host='localhost' dbname='betdb' password='everybodykissmybody'"
+
+conn = psycopg2.connect(conn_str)
+cur = conn.cursor()
 
 logging.basicConfig(filename='loggg.log', level=logging.INFO)
 logging.info("connected")
 
-conn = None
-cur = None
-conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='everybodykissmybody'")
-cur = conn.cursor()
+for i in update_db(cur, conn):
+	matches.append(i)
+cur.close()
+conn.close()
 
-
-def status_answer():
+def status_resp():
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	server_address = ('0.0.0.0', 5555)
 	sock.bind(server_address)
@@ -45,7 +51,7 @@ class Worker(multiprocessing.Process):
 		self._job_queue = job_queue
 
 	def run(self):
-		conn = psycopg2.connect("user='keker' host='db' dbname='betdb' password='everybodykissmybody'")
+		conn = psycopg2.connect(conn_str)
 		cur = conn.cursor()
 		while True:
 			ID = self._job_queue.get()
@@ -54,50 +60,32 @@ class Worker(multiprocessing.Process):
 			status, winner = get_status(ID)
 			try:
 				odds1, odds2 = get_odds(ID)
-				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s);", (odds1, odds2, status, winner, ID))
+				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s)", (odds1, odds2, status, winner, ID))
 				#conn.commit()
 			except AttributeError:
-				cur.execute("delete from events where flashscore_id = '{}';".format(ID))
+				cur.execute("delete from events where flashscore_id = '{}'".format(ID))
+				matches.remove(ID)
 				#conn.commit()
-
 			conn.commit()
-
-matches = update_db(cur, conn)
 
 jobs = []
 job_queue = multiprocessing.Queue()
 
-for i in range(5):
+for i in range(10):
 	p = Worker(job_queue)
 	jobs.append(p)
 	p.start()
-
 #Start socket
-sock = threading.Thread(target=status_answer, args=())
+sock = threading.Thread(target=status_resp, args=())
 sock.start()
 ###
 
 while(True):
 	start_time = time.time()
-
 	for ID in matches:
-		# status, winner = get_status(ID)
-		# try:
-		# 	odds1, odds2 = get_odds(ID)
-		# except AttributeError:
-		# 	cur.execute("delete from events where flashscore_id = '{}'".format(ID))
-		# 	print("no bets for ", ID)
-		# 	conn.commit()
-		# cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s)", (odds1, odds2, status, winner, ID))
-		# conn.commit()
 		job_queue.put(ID)
-		print()
 	while(not job_queue.empty()):
-		#print("not empty")
 		pass
-	conn.commit()
 	logging.info("Update took : {}".format(time.time() - start_time))
-	time.sleep(30)
-
-cur.close()
-conn.close()
+	print("cycle done")
+	time.sleep(10)
