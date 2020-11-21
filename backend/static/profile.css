@@ -1,0 +1,28 @@
+body{
+    margin: 0;
+}
+
+.email {
+    font-size: 20px;
+
+}
+
+.login {
+    font-size: 20px;
+}
+
+h3 {
+	font-size: 20px;
+}
+
+
+table {
+    width: 60%;
+    border-collapse: collapse;
+    border: 2px solid black;
+}
+th {border: 1px solid grey;}
+
+td {border: 1px solid grey;}
+
+
