@@ -63,9 +63,9 @@ func MakeBet(c echo.Context) error {
 			}
 			return c.JSON(500, Error{Err: "Event has already finished"})
 		}
-		return c.JSON(500, Error{Err: "Event doesn't exist"})
+		return c.JSON(500, Error{Err: "Error"})
 	}
-	return c.JSON(500, Error{Err: "Error"})
+	return c.JSON(500, Error{Err: "Event doesn't exist"})
 }
 
 func GetBets(c echo.Context) error {
