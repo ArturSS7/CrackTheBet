@@ -11,7 +11,7 @@ import socket
 manager = multiprocessing.Manager()
 matches = manager.list()
 
-conn_str = "user='keker' host='localhost' dbname='betdb' password='everybodykissmybody'"
+conn_str = "user='keker' host='db' dbname='betdb' password='everybodykissmybody'"
 
 conn = psycopg2.connect(conn_str)
 cur = conn.cursor()
@@ -58,14 +58,23 @@ class Worker(multiprocessing.Process):
 			if ID is None:
 				break
 			status, winner = get_status(ID)
-			try:
-				odds1, odds2 = get_odds(ID)
-				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s)", (odds1, odds2, status, winner, ID))
-				#conn.commit()
-			except AttributeError:
+			# try:
+			# 	odds1, odds2 = get_odds(ID)
+			# 	cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s)", (odds1, odds2, status, winner, ID))
+			# 	#conn.commit()
+			# except AttributeError:
+			# 	cur.execute("delete from events where flashscore_id = '{}'".format(ID))
+			# 	matches.remove(ID)
+			# 	#conn.commit()
+			odds1, odds2 = get_odds(ID, status)
+			if ((odds1 == '-') and (odds2 == '-')) or (status == 'canceled'):
 				cur.execute("delete from events where flashscore_id = '{}'".format(ID))
 				matches.remove(ID)
-				#conn.commit()
+			elif (status == 'finished'):
+				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s)", (odds1, odds2, status, winner, ID))
+				matches.remove(ID)
+			else:
+				cur.execute("update events set odds1 = (%s), odds2 = (%s), status = (%s), winner = (%s) where flashscore_id = (%s)", (odds1, odds2, status, winner, ID))
 			conn.commit()
 
 jobs = []

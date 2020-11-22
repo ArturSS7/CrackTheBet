@@ -1,9 +1,9 @@
 body{
-	margin: 0;
+  margin: 0;
 }
 /* header */
 .header{
-	background: red;
+  background: red;
   height: 80px;
 }
 .right_header{
@@ -35,7 +35,7 @@ body{
 }
 /* main */
 .main{
-	background: pink;
+  background: pink;
 }
 .content{
   width: 60%;
@@ -43,10 +43,10 @@ body{
   margin-right: 20%;
 }
 .sport_menu{
-	background: yellow;
+  background: yellow;
 }
 .events{
-	background: lightpink;
+  background: lightpink;
 }
 .league{
   border: 1px solid black;
@@ -96,8 +96,8 @@ body{
 }
 /* footer */
 .footer{
-	background: blue;
-	height: 60px;
+  background: blue;
+  height: 60px;
 }
 
 /*Всплывающее окно*/

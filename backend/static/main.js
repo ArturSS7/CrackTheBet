@@ -1,6 +1,6 @@
 $(document).ready((function(){
 	//let i = setInterval(function(){update_events()}, 2000);
-	update_events();
+	get_events();
 	$('.login_button').click(function(){
 		$('.block-popup_login, .overlay').fadeIn();
 	})
@@ -135,9 +135,8 @@ $(document).ready((function(){
 
 
 
-function update_events(){
+function get_events(){
 	$(".events").empty();
-	console.log("updted");
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -198,6 +197,28 @@ function update_events(){
 			});
 		}
 	};
+	xhttp.open("GET", "/api/events", true);
+	xhttp.send();
+}
+
+function update_events(){
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			let data = jQuery.parseJSON(this.responseText).leagues;
+			$.each(data, function(key1, league){
+				$.each(league.events, function(key2, match) {
+					match_dom = $(`#${match.flashscore_id}`);
+					match_dom.children('.odds').css("opacity", "1.0").animate({opacity: 0}, 1200, function(){
+						match_dom.children('.odds').css("visibility", "hidden");
+					});
+					match_dom.children('.odd1')[0].innerText = match.odds_1;
+					match_dom.children('.odd2')[0].innerText = match.odds_2;
+					match_dom.children('.odds').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1}, 1200);
+				});
+			});
+		}
+	}
 	xhttp.open("GET", "/api/events", true);
 	xhttp.send();
 }
