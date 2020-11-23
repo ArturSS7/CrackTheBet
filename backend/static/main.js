@@ -58,7 +58,7 @@ $(document).ready((function(){
             },
             error: function(response, status, error){
             	//console.log(response.responseJSON.error);
-            	document.getElementsByClassName('bet_error')[0].innerText = "login сначала";
+            	document.getElementsByClassName('bet_error')[0].innerText = response.responseJSON.error;
             	document.getElementsByClassName('bet_error')[0].style.display = 'block';
             	$('.bet input[type="submit" i]').attr('disabled',false);
             }
