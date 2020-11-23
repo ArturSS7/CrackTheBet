@@ -3,7 +3,7 @@ body{
 }
 /* header */
 .header{
-  background: red;
+  background: #00ff89;
   height: 80px;
   position: fixed;
   width: 100%;
@@ -38,7 +38,7 @@ body{
 }
 /* main */
 .main{
-  background: pink;
+  background: #c0ffe8;
   padding-top: 80px;
 }
 .content{
@@ -47,10 +47,10 @@ body{
   margin-right: 20%;
 }
 .sport_menu{
-  background: yellow;
+  background: #1a8a7ff2;
 }
 .events{
-  background: lightpink;
+  background: #dfffe9;
 }
 .league{
   border: 1px solid black;
@@ -104,13 +104,14 @@ body{
   color: red;
   margin-right: 2%;
   visibility: hidden;
+  font-weight: bold;
 }
 .is_live .live{
   visibility: visible;
 }
 /* footer */
 .footer{
-  background: blue;
+  background: #196700;
   height: 60px;
 }
 
