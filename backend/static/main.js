@@ -21,6 +21,10 @@ $(document).ready((function(){
 		$('.bet_error')[0].innerText = '';
 	})
 
+	$('.profile_button').click(function(){
+		window.location = '/profile';
+	})
+
 	$('.logout_button').click(function(){
 		$.ajax({
             type        : 'GET', // define the type of HTTP verb we want to use (POST for our form)
