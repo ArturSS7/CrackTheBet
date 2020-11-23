@@ -5,6 +5,9 @@ body{
 .header{
   background: red;
   height: 80px;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
 }
 .right_header{
   margin: 30px 2% 0 0;
@@ -36,6 +39,7 @@ body{
 /* main */
 .main{
   background: pink;
+  padding-top: 80px;
 }
 .content{
   width: 60%;
@@ -60,7 +64,8 @@ body{
   margin: 0 0 0 5%;
 }
 .match{
-  height: 30px;
+  padding-top: 5px;
+  height: 25px;
   border-bottom: 1px dotted grey; 
 }
 .match div{
@@ -84,7 +89,7 @@ body{
 }
 .match .odd2{
   float: right;
-  margin-right: 15%;
+  margin-right: 10%;
 }
 .match .dvoetochie{
   position: absolute;
@@ -94,6 +99,15 @@ body{
   color:white;
   cursor: pointer;
 }
+.live{
+  float: right;
+  color: red;
+  margin-right: 2%;
+  visibility: hidden;
+}
+.is_live .live{
+  visibility: visible;
+}
 /* footer */
 .footer{
   background: blue;
@@ -102,7 +116,7 @@ body{
 
 /*Всплывающее окно*/
 .block-popup{
-  position: absolute;
+  position: fixed;
   background: #fff;
   width: 37%;
   height: 135px;

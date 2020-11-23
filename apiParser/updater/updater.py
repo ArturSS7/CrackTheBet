@@ -9,7 +9,7 @@ def get_status(ID):
 	print(ID)
 	soup = BeautifulSoup(r.text, features="lxml")
 	raw_status = soup.find("div", {"class": "info-status mstat"}).text
-	if ("Finished" in raw_status) or ("Awarded" in raw_status):
+	if ("Finished" in raw_status) or ("Awarded" in raw_status) or ("After Penalties" in raw_status):
 		t1 = int(soup.find("div", {"id": "event_detail_current_result"}).findAll("span", {"class":"scoreboard"})[0].text)
 		t2 = int(soup.find("div", {"id": "event_detail_current_result"}).findAll("span", {"class":"scoreboard"})[1].text)
 		if t1 > t2:
@@ -37,7 +37,6 @@ def get_odds(ID, status):
 		try:
 			r = requests.get("https://d.flashscore.com/x/feed/df_lod2_453_{}".format(ID), headers=headers)
 			data = r.text.split('÷')
-			print(ID, status, data)
 			odds1 = data[3].split('¬')[0][1:]
 			odds2 = data[7].split('¬')[0][1:]
 			return odds1, odds2
