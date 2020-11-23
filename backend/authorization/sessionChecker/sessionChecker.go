@@ -1,17 +1,20 @@
 package sessionChecker
 
 import (
-	"CrackTheBet/backend/bets"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo-contrib/session"
 	"log"
 )
 
+type Error struct {
+	Err string `json:"error"`
+}
+
 func CheckSession(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		if id := GetIdFromSession(c); id == -1 {
 			if c.Path() == "/api/bet" || c.Path() == "/api/bets" {
-				return c.JSON(401, bets.Error{Err: "Unauthorized"})
+				return c.JSON(401, Error{Err: "Unauthorized"})
 			}
 			return c.Redirect(302, "/")
 		}
