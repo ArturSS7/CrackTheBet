@@ -7,14 +7,11 @@ import (
 )
 
 func CheckSession(next echo.HandlerFunc) echo.HandlerFunc {
-	notAuth := []string{"/news", "/", "/register"}
 	return func(c echo.Context) error {
-		for _, value := range notAuth {
-			if value == c.Path() {
-				return next(c)
-			}
-		}
 		if id := GetIdFromSession(c); id == -1 {
+			if c.Path() == "/api/bet" || c.Path() == "/api/bets" {
+				return c.NoContent(401)
+			}
 			return c.Redirect(302, "/")
 		}
 		return next(c)
