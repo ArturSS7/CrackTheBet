@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 def get_status(ID):
 	r = requests.get("https://www.flashscore.com/match/{}".format(ID))
-	print(ID)
+	#print(ID)
 	soup = BeautifulSoup(r.text, features="lxml")
 	raw_status = soup.find("div", {"class": "info-status mstat"}).text
 	if ("Finished" in raw_status) or ("Awarded" in raw_status) or ("After Penalties" in raw_status):
