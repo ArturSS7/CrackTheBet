@@ -1,7 +1,3 @@
-body{
-    margin: 0;
-}
-
 .email {
     font-size: 20px;
 
@@ -26,3 +22,15 @@ th {border: 1px solid grey;}
 td {border: 1px solid grey;}
 
 
+a {
+    text-decoration: none; /* Убирает подчеркивание для ссылок */
+    color: black;
+   } 
+a:hover { 
+    text-decoration: none; /* Добавляем подчеркивание при наведении курсора на ссылку */
+    color: black; /* Ссылка красного цвета */
+   } 
+
+h3 {
+    margin-top: 0;
+}

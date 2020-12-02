@@ -49,6 +49,11 @@ body{
 .sport_menu{
   background: #1a8a7ff2;
 }
+
+.sport_menu p {
+  margin: 0;
+}
+
 .events{
   background: #dfffe9;
 }

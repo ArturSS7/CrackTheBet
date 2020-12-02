@@ -6,29 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="private">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../static/profile.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<link rel="stylesheet" href="../static/profile.css">
+	<link rel="stylesheet" href="../static/styles.css">
 </head>
 
 <body>
     
-<div class="container header">
-</div>
+	<div class="container header">
+		<div class="logo"><p>CrackTheBet</p></div>
+		{{if .Balance}}
+		<div class="container right_header">
+			<div class="balance">
+				<p>{{.Balance}} сабжей</p>
+			</div>
+			<div class="buttons">
+				<button class="logout_button">logout</button>
+				<button class="profile_button"><a href="/">Back</a></button>
+			</div>
+		</div>
+		{{end}}
+	</div>
+
 <div class="container main">
     <div class="container content">
-        <div class="profile_info">
-            <div class="login"><h3>Login:</h3> {{.Username}}</div>
-			<div class="login"><h3>Balance:</h3> {{.Balance}}</div>
-        </div>
-		<h3>Bets History:</h3>
+		<div class="container sport_menu">
+			<p>Cabinet</p>
+		</div>
+        <div class="container events">
+			<div class="login"><h3>Login:</h3> {{.Username}}</div>
+			<h3>Bets History:</h3>
         <div class="bets_history">
             <table></table>
         </div>
+        </div>
+		
     </div>
 </div>
 <div class="container footer">
-    <script src="../static/profile.js"></script>
 </div>
+<script src="../static/profile.js"></script>
 </body>
 
 </html>

@@ -40,9 +40,19 @@ function get_history(){
 		new_bet['Player2'] = bet['player_2'];
 		new_bet['Bet Player'] = bet['bet_player'];
 		new_bet['Odds'] = bet['odds'];
-		new_bet['Bet'] = bet['amount'];
+    new_bet['Bet'] = bet['amount'];
 		new_bet['Prize'] = bet['prize'];
-		new_bet['Status'] = bet['status'];
+    new_bet['Status'] = bet['status'];
+    console.log(typeof new_bet['Prize']);
+    if (new_bet['Prize'] == -1 || new_bet['Prize'] == '-1') {
+      new_bet['Prize'] = "";
+    }
+
+    if (new_bet['Status'] == 'not_processed') {
+      new_bet['Status'] = 'Not Processed';
+    }
+
+
 		return new_bet;
 });
 console.log(new_bets);
