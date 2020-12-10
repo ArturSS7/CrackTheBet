@@ -1,5 +1,4 @@
 # CrackTheBet
 
 ### 1. Run database and api parser
-`docker-compose up`
-123123
+`docker-compose up --build`
