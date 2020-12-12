@@ -30,4 +30,6 @@ WORKDIR /app/src/CrackTheBet/backend
 
 RUN go build
 
+EXPOSE 666
+
 CMD ["./backend"]

@@ -1,18 +1,10 @@
 version: '3.1'
 services:
   db:
-    image:
-      postgres
-    environment:
-      POSTGRES_USER: keker
-      POSTGRES_PASSWORD: everybodykissmybody
-      POSTGRES_DB: betdb
+    build:
+      ./db
     ports:
-      - 5432:5432
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - "dbdata:/var/lib/postgresql/data"
-    #command: ["postgres", "-c", "log_statement=all"]
+    - 5432:5432
   apiparse:
     build:
       ./apiParser
@@ -36,5 +28,3 @@ services:
       - db
       - apiparse
 
-volumes:
-  dbdata:

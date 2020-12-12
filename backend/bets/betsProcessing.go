@@ -12,7 +12,7 @@ import (
 )
 
 func updateEventStatus(db *sql.DB, id string) bool {
-	conn, _ := net.Dial("tcp", "127.0.0.1:5555")
+	conn, _ := net.Dial("tcp", "apiparse:5555")
 	_, err := fmt.Fprintf(conn, id+"\n")
 	if err != nil {
 		log.Println(err)
