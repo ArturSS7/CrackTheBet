@@ -14,8 +14,6 @@ services:
       - db
     depends_on:
       - db
-    volumes:
-      - ./apiParser/loggg.log:/app/loggg.log
   backend:
     build:
       ./backend
