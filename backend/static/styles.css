@@ -21,7 +21,10 @@ body{
 }
 .logo{
   display: inline-block;
-  margin: 30px 0 0 5%;
+  margin: 0 0 0 3%;
+}
+.logo img{
+  height: 80px;
 }
 .header p{
   margin: 0 0 0 0;
@@ -56,6 +59,7 @@ body{
 
 .events{
   background: #dfffe9;
+  min-height: 800px;
 }
 .league{
   border: 1px solid black;
@@ -120,6 +124,16 @@ body{
   height: 60px;
 }
 
+/* Password recovery*/
+
+.password_recovery{
+    display: inline-block;
+    margin: 5% 40%;
+}
+
+.password_recovery input{
+  margin: 10px 0px;
+}
 /*Всплывающее окно*/
 .block-popup{
   position: fixed;
@@ -180,6 +194,19 @@ body{
   background: pink;
   color: red;
 }
+.rec_error{
+  display: none;
+  background: pink;
+  color: red;
+}
+.rec_success{
+  display: none;
+  background: lightgreen;
+  color: darkgreen;
+}
 .bet_descr_team{
   font-weight: bold;
+}
+#button_password_rec:hover{
+  color: DarkCyan;
 }

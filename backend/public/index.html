@@ -9,12 +9,13 @@
     <!-- <script src="/root/go/src/CrackTheBet/backend/static/main.js"></script>
     	<link rel="stylesheet" href="/root/go/src/CrackTheBet/backend/static/styles.css"> -->
     <script src="../static/main.js"></script>
+    <script src="../static/events.js"></script>
     <link rel="stylesheet" href="../static/styles.css">
 </head>
 
 <body>
 	<div class="container header">
-		<div class="logo"><p>CrackTheBet</p></div>
+		<div class="logo"><a href='/'><img src='static/logo.png'/></a></div>
 		{{if not .Logged}}
 		<div class="container right_header">
 			<div class="buttons">
@@ -84,6 +85,7 @@
 	    <input class="log_p" type="password" id="pass_1" name="password" required/><br>
 	    <input type="submit" value="Confirm"/>
 	  </form>
+	  <p id=button_password_rec>Forgot password?</p>
 	  <span class="fadeOut">&times;</span>
 	</div>
 	<div class="block-popup block-popup_reg">
@@ -125,7 +127,15 @@
 		</form>
 		<span class="fadeOut">&times;</span>
 	</div>
-	
+	<div class="block-popup block-popup_recovery">
+	  <h3>Password recovery</h3>
+	  <form action='/forgot-password' method="post" class="recovery_form">
+	  	<label for="email_rec">E-Mail:</label>
+	    <input class="rec_e" type="text" placeholder="enter email" id="email_rec" name="username" required/><br>
+	    <input type="submit" value="Confirm"/>
+	  </form>
+	  <span class="fadeOut">&times;</span>
+	</div>
 </body>
 
 </html>

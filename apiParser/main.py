@@ -67,7 +67,7 @@ class Worker(multiprocessing.Process):
 			# 	matches.remove(ID)
 			# 	#conn.commit()
 			odds1, odds2 = get_odds(ID, status)
-			if ((odds1 == '-') and (odds2 == '-')) or (status == 'canceled'):
+			if ((odds1 == '-') or (odds2 == '-')) or (status == 'canceled'):
 				cur.execute("delete from events where flashscore_id = '{}'".format(ID))
 				matches.remove(ID)
 			elif (status == 'finished'):
