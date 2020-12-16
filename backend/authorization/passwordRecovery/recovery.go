@@ -10,6 +10,10 @@ import (
 	"log"
 )
 
+type Error struct {
+	Err string `json:"error"`
+}
+
 func RecoverPassword(c echo.Context) error {
 	email := c.FormValue("email")
 	cc := c.(*database.DBContext)
@@ -69,21 +73,21 @@ func CheckPasswordToken(c echo.Context) error {
 	if result {
 		return c.Render(200, "recovery.html", token)
 	}
-	return c.String(200, "Invalid token")
+	return c.JSON(500, Error{Err: "Invalid token"})
 }
 
 func UpdatePassword(c echo.Context) error {
 	token := c.FormValue("token")
 	if token == "" {
-		return c.String(200, "invalid token")
+		return c.JSON(500, Error{Err: "Invalid token"})
 	}
 	password := c.FormValue("password")
 	repeatPassword := c.FormValue("repeat-password")
 	if password != repeatPassword {
-		return c.String(200, "Passwords don't match")
+		return c.JSON(500, Error{Err: "Passwords don't match"})
 	}
 	if !registration.ValidatePassword(password) {
-		return c.String(200, "Password must be minimum 8 letters long, contain numbers, upper chars and special characters")
+		return c.JSON(500, Error{Err: "Password must be minimum 8 letters long, contain numbers, upper chars and special characters"})
 	}
 	var id int
 	cc := c.(*database.DBContext)
@@ -111,7 +115,7 @@ func UpdatePassword(c echo.Context) error {
 		if err != nil {
 			log.Println(err)
 		}
-		return c.String(200, "Password successfully changed. You can now login")
+		return c.JSON(200, Error{Err: "Password successfully changed. You can now login"})
 	}
-	return c.String(200, "Invalid token")
+	return c.JSON(500, Error{Err: "Invalid token"})
 }

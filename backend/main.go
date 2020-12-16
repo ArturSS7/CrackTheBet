@@ -62,7 +62,7 @@ func main() {
 	e.POST("/register", registration.HandleRegistration)
 	e.GET("/logout", user.LogOut)
 	e.GET("/confirm-email/", emailConfirmation.ConfirmEmail)
-	e.GET("/forgot-password", user.ForgotPassword)
+	//e.GET("/forgot-password", user.ForgotPassword)
 	e.POST("/forgot-password", passwordRecovery.RecoverPassword)
 	e.GET("/recovery", passwordRecovery.CheckPasswordToken)
 	e.POST("/recovery", passwordRecovery.UpdatePassword)
