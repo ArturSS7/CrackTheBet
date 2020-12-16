@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo"
 	"log"
 	"strconv"
+	"time"
 )
 
 type BetRes struct {
@@ -19,6 +20,7 @@ type BetRes struct {
 	Prize     float32 `json:"prize"`
 	Status    string  `json:"status"`
 	Amount    int     `json:"amount"`
+	BruhTime  string  `json:"bruh_time"`
 }
 
 type BetsRes struct {
@@ -85,6 +87,8 @@ func GetBets(c echo.Context) error {
 				log.Println(err)
 				return c.NoContent(500)
 			}
+			t := time.Unix(b.BetTime, 0)
+			b.BruhTime = t.String()
 			bets.Bets = append(bets.Bets, b)
 		}
 		return c.JSON(200, bets)

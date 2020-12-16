@@ -35,7 +35,7 @@ function get_history(){
 	    var new_bets = bets.map(function(bet){
 
 		var new_bet = {};
-		new_bet['Date'] = new Date(bet['time']).toLocaleTimeString('en-US');
+		new_bet['Date'] = bet['bruh_time']
 		new_bet['Player1'] = bet['player_1'];
 		new_bet['Player2'] = bet['player_2'];
 		new_bet['Bet Player'] = bet['bet_player'];
