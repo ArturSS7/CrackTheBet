@@ -126,7 +126,7 @@ $(document).ready((function(){
             encode      : true,
             success: function(data) {
                 //console.log("success", data);
-                location.reload();
+                window.location = '/';
             },
             error: function(response, status, error){
             	//console.log(response.responseJSON.error);
@@ -156,7 +156,7 @@ $(document).ready((function(){
             timeout     : 0,
             success: function(data) {
                 //console.log("success", data);
-                location.reload();
+                window.location = '/';
             }
         });
         
